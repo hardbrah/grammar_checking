@@ -9,3 +9,5 @@ tqdm
 einops
 bitsandbytes>=0.41.1
 protobuf<=3.20.3
+vllm
+openai
