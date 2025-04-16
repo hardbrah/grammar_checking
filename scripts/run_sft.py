@@ -5,6 +5,9 @@ import json
 from datasets import Dataset
 
 # 加载模型和 tokenizer
+model_path = "/mnt/workspace/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct"
+tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
 model_name = "Qwen/Qwen2.5-7B"
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", trust_remote_code=True)
@@ -25,7 +28,7 @@ def load_data(path):
     with open(path, "r", encoding="utf-8") as f:
         return [json.loads(line) for line in f]
 
-dataset = load_data("data\FCGEC_train_filtered_modified.jsonl")
+dataset = load_data("data\test.jsonl")
 
 # 转换数据格式
 def to_prompt(example):
@@ -69,4 +72,5 @@ trainer = SFTTrainer(
 # 启动训练
 trainer.train()
 
+trainer.model.save_pretrained("./output")
 trainer.model.save_pretrained("./output")
