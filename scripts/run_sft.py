@@ -8,9 +8,6 @@ from datasets import Dataset
 model_path = "/mnt/workspace/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
-model_name = "Qwen/Qwen2.5-7B"
-tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", trust_remote_code=True)
 
 # LoRA 配置
 peft_config = LoraConfig(
@@ -72,5 +69,4 @@ trainer = SFTTrainer(
 # 启动训练
 trainer.train()
 
-trainer.model.save_pretrained("./output")
 trainer.model.save_pretrained("./output")
