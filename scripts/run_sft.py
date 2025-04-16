@@ -3,6 +3,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from peft import LoraConfig, get_peft_model
 import json
 from datasets import Dataset
+from transformers import DataCollatorForLanguageModeling
 
 # 加载模型和 tokenizer
 model_path = "/mnt/workspace/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct"
@@ -56,12 +57,16 @@ training_args = TrainingArguments(
     logging_first_step=True,
 )
 
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer,
+    mlm=False,
+)
+
 # 设置 SFTTrainer
 trainer = SFTTrainer(
     model=model,
-    tokenizer=tokenizer,
+    data_collator=data_collator,
     train_dataset=ds,
-    dataset_text_field="text",
     args=training_args,
     max_seq_length=1024,
 )
@@ -69,4 +74,5 @@ trainer = SFTTrainer(
 # 启动训练
 trainer.train()
 
+# 保存adapter
 trainer.model.save_pretrained("./output")
