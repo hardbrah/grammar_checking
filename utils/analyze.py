@@ -1,7 +1,7 @@
 import json
 import re
-from llm_api import call_grammar_checking_api
-from plot_data import *
+from utils.llm_api import call_grammar_checking_api
+from utils.plot_data import *
 
 def remove_tags(text):
     """
@@ -51,13 +51,12 @@ def caculate(data:str):
         del_count = len(del_match)
     return add_count, del_count
 
-def parse_json(file_path):
+def parse_json(data):
     """
     分析jsonl文件，统计修改符号个数
     :param file_path: jsonl文件路径
     :return: json列表，每个元素包含原句、答案、预测结果、添加符号个数、删除符号个数
     """
-    data = read_json(file_path)
     results, ans_adds, ans_dels, pre_adds, pre_dels = [], [], [], [], []
     for item in data:
         for message in item["messages"]:
@@ -84,8 +83,8 @@ def assemble_json(raw_text, ans_text):
 if __name__ == "__main__":
     # 示例用法
     results, ans_adds, ans_dels, pre_adds, pre_dels = [], [], [], [], []
-    file_path = r"D:\code\grammar_checking\data\grammar_checking.json"
-    results, ans_adds, ans_dels, pre_adds, pre_dels = parse_json(file_path)
+    file_path = r"../data/grammar_checking.json"
+    results, ans_adds, ans_dels, pre_adds, pre_dels = parse_json(read_json(file_path))
     ans_modify_times = [ans_add + ans_del for ans_add, ans_del in zip(ans_adds, ans_dels)]
     pre_modify_times = [pre_add + pre_del for pre_add, pre_del in zip(pre_adds, pre_dels)]
     plot_scatter(ans_adds, pre_adds, x_label="ans_add_count", y_label="pre_add_count", title="relationship between ans_add_count and pre_add_count", file_path="../images/adds_scatter_chart.png")

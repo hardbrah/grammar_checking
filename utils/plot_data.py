@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 # 🎨 饼状图：显示百分比 + 数值
 def autopct_format(pct, allvals):
@@ -61,6 +62,10 @@ def plot_line(data_x:list, data_y:list, x_label="token length", y_label="modift 
     
 def plot_scatter(data_x:list, data_y:list, x_label="token length", y_label="modift times", title="relationship between token length and modify times", file_path="images/scatter_chart.png"):
     plt.scatter(data_x, data_y, color='b', alpha=0.5)
+    
+    x_min, x_max = min(data_x), max(data_x)
+    x_ref = np.linspace(x_min, x_max, 100)
+    plt.plot(x_ref, x_ref, color='red', linestyle='--', label='y = x')
 
     # 添加标题和标签
     plt.title(title)
