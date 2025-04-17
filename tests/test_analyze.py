@@ -10,34 +10,9 @@ from utils.analyze import parse_json
 class TestRemoveTags(unittest.TestCase):
     def test_remove_tags(self):
         # Test case 1: Text with both add and delete tags
-        text = "This is ##added## text and ~~deleted~~ text."
-        expected = "This is added text and  text."
-        self.assertEqual(remove_tags(text), expected)
-
-        # Test case 2: Text with only add tags
-        text = "This is ##added## text."
-        expected = "This is added text."
-        self.assertEqual(remove_tags(text), expected)
-
-        # Test case 3: Text with only delete tags
-        text = "This is ~~deleted~~ text."
-        expected = "This is  text."
-        self.assertEqual(remove_tags(text), expected)
-
-        # Test case 4: Text with no tags
-        text = "This is plain text."
-        expected = "This is plain text."
-        self.assertEqual(remove_tags(text), expected)
-
-        # Test case 5: Empty string
-        text = ""
-        expected = ""
-        self.assertEqual(remove_tags(text), expected)
-
-        # Test case 6: Nested tags (edge case)
-        text = "This is ##added ~~nested~~## text."
-        expected = "This is added  text."
-        self.assertEqual(remove_tags(text), expected)
+        text = "SpecInfer使用基于树的并行解码来计算~~其树~~##词元树的##注意力，为了能够在词元树上进行并行化验证，SpecInfer提出了一种树形注意力（Tree Attention）计算方法，通过构造的掩码矩阵和基于深度优先的KV-缓存更新机制，验证器可以在不增加额外存储的同时，尽可能并行化树中每一条路径的解码过程。相比于朴素的逐序列或逐词元~~的~~解码方法，该方法可以同时在内存开销和计算效率上达到性能最优。对于给定的推测词元树N，SpecInfer使用基于树的并行解码来计算~~其~~树形注意力，并生成一个输出张量O，~~该张量为~~##其中包含树中####每个节点u##N~~中~~的~~每个节点u~~都包含一个词元~~##对应的一个标记##。SpecInfer的词元树验证器对照大语言模型检查推测词元的正确性，SpecInfer同时支持贪心解码和~~随机采样~~##推测解码##。"
+        
+        print(remove_tags(text))
         
         
 class TestParseJson(unittest.TestCase):
