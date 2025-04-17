@@ -1,7 +1,7 @@
 import os
 import json
 import pytest
-from utils.analyze import remove_tags, read_json
+from utils.analyze import *
 import unittest
 from utils.analyze import call_grammar_checking_api
 from utils.analyze import parse_json
@@ -82,5 +82,25 @@ class TestParseJson(unittest.TestCase):
         self.assertEqual(ans_dels, [0, 0])
         self.assertEqual(pre_adds, [1, 1])
         self.assertEqual(pre_dels, [1, 1])
+        
+class TestWriteJson(unittest.TestCase):
+    def test_write_json(self):
+        # Mock data to write
+        mock_data = {"key": "value", "list": [1, 2, 3]}
+        mock_file_path = "test_output.json"
+
+        try:
+            # Call the function under test
+            write_json(mock_data, mock_file_path)
+
+            # Verify the file was created and contains the correct data
+            with open(mock_file_path, 'r', encoding='utf-8') as f:
+                written_data = json.load(f)
+            self.assertEqual(written_data, mock_data)
+        finally:
+            # Clean up the test file
+            if os.path.exists(mock_file_path):
+                os.remove(mock_file_path)
+
 
 

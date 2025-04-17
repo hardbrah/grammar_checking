@@ -87,9 +87,12 @@ if __name__ == "__main__":
     results, ans_adds, ans_dels, pre_adds, pre_dels = parse_json(read_json(file_path))
     ans_modify_times = [ans_add + ans_del for ans_add, ans_del in zip(ans_adds, ans_dels)]
     pre_modify_times = [pre_add + pre_del for pre_add, pre_del in zip(pre_adds, pre_dels)]
+    
+    
     plot_scatter(ans_adds, pre_adds, x_label="ans_add_count", y_label="pre_add_count", title="relationship between ans_add_count and pre_add_count", file_path="../images/adds_scatter_chart.png")
     plot_scatter(ans_dels, pre_dels, x_label="ans_del_count", y_label="pre_del_count", title="relationship between ans_del_count and pre_del_count", file_path="../images/dels_scatter_chart.png")
     plot_scatter(ans_modify_times, pre_modify_times, x_label="ans_modify_times", y_label="pre_modify_times", title="relationship between ans_modify_times and pre_modify_times", file_path="../images/modify_times_scatter_chart.png")
-    write_json(results, r"D:\code\grammar_checking\data\grammar_checking_results.json")
+    
+    write_json(results, r"../data/grammar_checking_results.json")
     print("分析完成，结果已保存。")
     
