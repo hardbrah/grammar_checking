@@ -31,7 +31,7 @@ def load_data(path):
         return [json.loads(line) for line in f]
 
 # dataset = load_data("../data/test.jsonl")
-dataset = load_data("../data/FCGEC_train_filtered_modified.jsonl")
+dataset = load_data("../data/FCGEC_train_filtered_modified_no_tag.jsonl")
 
 # 转换数据格式
 def to_prompt(example):
